@@ -63,6 +63,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
 
+    public function isAdmin()
+    {
+        return $this->role == 'admin';
+    }
+
     /**
      * Gets query for [[Requests]].
      *
