@@ -10,28 +10,34 @@ use yii\widgets\ActiveForm;
 
 <div class="request-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin();
+    $request = app\models\Request::findOne($model->id);
+    ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <h2>Услуга -
+        <?php
+        $service = app\models\Service::findOne($model->service_id);
+        echo $service ? Html::encode($service->name) :
+            Html::encode($request->custom_service_description) . " (своя услуга)";
+        ?>
+        (Телефон: <?= Html::encode($request->contact_phone); ?>)
+    </h2>
 
-    <?= $form->field($model, 'service_id')->textInput() ?>
+    <p>Адрес: <?= Html::encode($request->address); ?></p>
 
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+    <h3><?= $model->getAttributeLabel('desired_datetime') ?></h3>
+    <p><?= Html::encode(date('d-m-Y H:m', strtotime($request->desired_datetime))) ?></p>
 
-    <?= $form->field($model, 'contact_phone')->textInput(['maxlength' => true]) ?>
+    <h3><?= $model->getAttributeLabel('payment_method') ?></h3>
+    <p><?= ($request->payment_method == "card") ?  "банковская карта" : "наличные"; ?></p>
 
-    <?= $form->field($model, 'desired_datetime')->textInput() ?>
-
-    <?= $form->field($model, 'custom_service_description')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'payment_method')->dropDownList([ 'cash' => 'Cash', 'card' => 'Card', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'status')->dropDownList([ 'new' => 'New', 'in_progress' => 'In progress', 'completed' => 'Completed', 'cancelled' => 'Cancelled', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'status')->dropDownList([ 'in_progress' => 'В работе',
+        'completed' => 'Выполнено', 'cancelled' => 'Отменено' ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'cancellation_reason')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Ответить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

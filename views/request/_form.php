@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
     dropDownList(['cash' => 'наличные', 'card' => 'банковская карта']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Отправить заявку', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
