@@ -87,7 +87,7 @@ class UserController extends Controller
         }
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['site/login']);
+                return $this->redirect(['/site/login']);
             }
         } else {
             $model->loadDefaultValues();
